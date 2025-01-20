@@ -35,7 +35,7 @@ def schedule_deadline_reminder(task_id, title, due_date, assigned_emails):
         Rule=rule_name,
         Targets=[{
             'Id': f"ReminderTarget_{task_id}",
-            'Arn': 'arn:aws:lambda:eu-west-1:************:function:sendReminders',
+            'Arn': 'arn:aws:lambda:<region>:************:function:<function>',
             'Input': json.dumps({
                 'task_id': task_id,
                 'title': title,

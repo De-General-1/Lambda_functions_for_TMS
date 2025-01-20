@@ -6,7 +6,7 @@ sns = boto3.client('sns')
 def lambda_handler(event, context):
     """Send a reminder email for an upcoming task."""
     try:
-        print('From the catch block')
+        print('From the try block')
         print(event)
         print(context)
         task = event
@@ -18,12 +18,25 @@ def lambda_handler(event, context):
             f"Please complete your task before the deadline."
         )
         subject = f"Task Reminder: {task['title']}"
+        emails = task['assigned_emails']
 
         # Send email via SNS
-        sns.publish(
-            TopicArn='arn:aws:sns:**********:**********:<topic_name>',
+        for email in emails:
+        # Publish the message to SNS topic for each user individually
+            sns.publish(
+            TopicArn='arn:aws:sns:<region>:677276091734:<topic_name>',
             Subject=subject,
-            Message=message
+            Message=message,
+            MessageAttributes={
+                'email': {
+                    'DataType': 'String',
+                    'StringValue': email 
+                },
+                'group': {
+                    'DataType': 'String',
+                    'StringValue': 'Team_members'
+                }
+            }
         )
     except Exception as e:
         print('From the catch block')

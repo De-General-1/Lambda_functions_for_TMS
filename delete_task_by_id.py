@@ -29,7 +29,7 @@ def delete_task_by_id(task_id):
             'body': json.dumps(f"Error deleting task: {str(e)}")
         }
 
-def lambda_handler(event, context):
+def lambda_handler(event):
     try:
         # Retrieve task_id from the event path parameters
         task_id = event.get('queryStringParameters', {}).get('id')
